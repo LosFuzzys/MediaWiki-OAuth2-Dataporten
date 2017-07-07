@@ -204,10 +204,18 @@ class SpecialOAuth2Github extends SpecialPage {
 		if( false === $user || $user->getId() != 0) {
 			throw new MWException('Unable to create user.');
 		}
+		if ( !$user->isLoggedIn() ) { 
+			// [New in MW 1.27] 
+			// User does not exist, 
+			// so we need to add them to the DB before changing fields.
+			$user->addToDatabase(); 
+		}
+
 		if ($name) {
 			$user->setRealName($name);
 		}
 		if ( $wgAuth->allowPasswordChange() ) {
+			// TODO: This is deprecated since MW 1.27, replace by AuthManager
 			$user->setPassword(PasswordFactory::generateRandomPasswordString(128));
 		}
 		if($email) {
