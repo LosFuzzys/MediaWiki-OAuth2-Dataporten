@@ -96,7 +96,6 @@ class OAuth2 {
 		$url = $this->URL_AUTH . http_build_query($params);
 
 		header("Location: $url");
-		exit;
 	}
 
 
