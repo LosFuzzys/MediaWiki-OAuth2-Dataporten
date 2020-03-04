@@ -139,7 +139,9 @@ class SpecialOAuth2Github extends SpecialPage
     private function fix_return($response)
     {
 
-        if (isset($response['name'])) {
+        if (isset($response['nickname'])) {
+            $name = $response['nickname'];
+        } else if (isset($response['name'])) {
             $name = $response['name'];
         } else if (isset($response['user']['name'])) {
             $name = $response['user']['name'];
@@ -157,6 +159,8 @@ class SpecialOAuth2Github extends SpecialPage
             $id = $response['user']['userid'];
         } else if (isset($response['user']['user_id'])) {
             $id = $response['user']['user_id'];
+        } else if (isset($response['sub'])) {
+            $id = $response['sub'];
         }
 
         if (isset($response['email'])) {
