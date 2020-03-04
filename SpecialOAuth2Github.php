@@ -106,10 +106,10 @@ class SpecialOAuth2Github extends SpecialPage
         $orgsEndpoint = 'https://api.github.com/user/orgs';
         $orgs = $this->client->get_identity($access_token, $orgsEndpoint); // $wgOAuth2Github['config']['group_endpoint']);
 
-		// https://api.github.com/users/$name/orgs
-		//$orgsEndpoint = 'https://api.github.com/users/' .$credentials['id'] . '/orgs';
-		$orgsEndpoint = 'https://api.github.com/user/orgs';
-		$orgs = $this->client->get_identity($access_token, $orgsEndpoint); // $wgOAuth2Github['config']['group_endpoint']);
+        // https://api.github.com/users/$name/orgs
+        //$orgsEndpoint = 'https://api.github.com/users/' .$credentials['id'] . '/orgs';
+        $orgsEndpoint = 'https://api.github.com/user/orgs';
+        $orgs = $this->client->get_identity($access_token, $orgsEndpoint); // $wgOAuth2Github['config']['group_endpoint']);
 
         if (isset($wgOAuth2Github['config']['required_org']) && $wgOAuth2Github['config']['required_org'] != NULL) {
             if (!$this->checkGroupmembership($orgs, $wgOAuth2Github['config']['required_org'])) {
@@ -122,10 +122,6 @@ class SpecialOAuth2Github extends SpecialPage
                 return false;
             }
         }
-
-	                return false;
-	        }
-	    }
 
         $user = $this->userHandling($credentials);
         $user->setCookies(null, null, true);
