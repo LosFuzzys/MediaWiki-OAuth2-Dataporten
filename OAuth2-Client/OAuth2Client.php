@@ -93,11 +93,7 @@ class OAuth2
 
     public function get_identity($access_token, $identity_url)
     {
-        $params = array(
-            'access_token' => $access_token,
-        );
-        $url_params = http_build_query($params);
-        $url = $identity_url . "?" . $url_params;
+        $url = $identity_url;
         $result = curl_exec($this->create_curl($url, array('Authorization: ' . $this->auth_type . ' ' . $access_token, 'Accept: application/json'), false));
         $result_obj = json_decode($result, true);
 
