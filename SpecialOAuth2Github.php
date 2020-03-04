@@ -101,17 +101,13 @@ class SpecialOAuth2Github extends SpecialPage
 
         $credentials = $this->fix_return($this->client->get_identity($access_token, $wgOAuth2Github['config']['info_endpoint']));
 
-        // https://api.github.com/users/$name/orgs
-        //$orgsEndpoint = 'https://api.github.com/users/' .$credentials['id'] . '/orgs';
-        $orgsEndpoint = 'https://api.github.com/user/orgs';
-        $orgs = $this->client->get_identity($access_token, $orgsEndpoint); // $wgOAuth2Github['config']['group_endpoint']);
-
-        // https://api.github.com/users/$name/orgs
-        //$orgsEndpoint = 'https://api.github.com/users/' .$credentials['id'] . '/orgs';
-        $orgsEndpoint = 'https://api.github.com/user/orgs';
-        $orgs = $this->client->get_identity($access_token, $orgsEndpoint); // $wgOAuth2Github['config']['group_endpoint']);
 
         if (isset($wgOAuth2Github['config']['required_org']) && $wgOAuth2Github['config']['required_org'] != NULL) {
+            // https://api.github.com/users/$name/orgs
+            //$orgsEndpoint = 'https://api.github.com/users/' .$credentials['id'] . '/orgs';
+            $orgsEndpoint = 'https://api.github.com/user/orgs';
+            $orgs = $this->client->get_identity($access_token, $orgsEndpoint); // $wgOAuth2Github['config']['group_endpoint']);
+
             if (!$this->checkGroupmembership($orgs, $wgOAuth2Github['config']['required_org'])) {
                 $error = ('You a not part of the ' . $wgOAuth2Github['config']['required_org'] . ' organization on Github!');
 
