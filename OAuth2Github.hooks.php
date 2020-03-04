@@ -1,36 +1,44 @@
 <?php
-class OAuth2GithubHooks {
 
-	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
+class OAuth2GithubHooks
+{
 
-	    $script = '<link rel="stylesheet" type="text/css" href="/wiki/extensions/OAuth2Github/modules/OAuth2Github.css">';
+    public static function onBeforePageDisplay(OutputPage &$out, Skin &$skin)
+    {
 
-	    $out->addHeadItem("jsonTree script", $script);
+        $script = '<link rel="stylesheet" type="text/css" href="/wiki/extensions/OAuth2Github/modules/OAuth2Github.css">';
 
-	    return true;
+        $out->addHeadItem("jsonTree script", $script);
 
-	}
-	public static function onUserLoginForm( &$tpl ) {
-		global $wgRequest;
-	   	$header = $tpl->get( 'header' );
-	   	$header .= '<a class="mw-ui-button dataporten-button" href="' . Skin::makeSpecialUrlSubpage( 'OAuth2Github', 'redirect', 'returnto='.$wgRequest->getVal('returnto') ) . '">Login with Github</a>';
-	   	$tpl->set( 'header', $header );
-	}
+        return true;
 
-	public static function onUserLogout( &$user ) {
-		return true;
-	}
+    }
 
-	public static function getOAuth2VendorClassPath() {
-		return dirname(__FILE__) . DIRECTORY_SEPARATOR . 'vendors' . DIRECTORY_SEPARATOR . 'oauth_2';
-	}
+    public static function onUserLoginForm(&$tpl)
+    {
+        global $wgRequest;
+        $header = $tpl->get('header');
+        $header .= '<a class="mw-ui-button dataporten-button" href="' . Skin::makeSpecialUrlSubpage('OAuth2Github', 'redirect', 'returnto=' . $wgRequest->getVal('returnto')) . '">Login with Github</a>';
+        $tpl->set('header', $header);
+    }
 
-	public static function onLoadExtensionSchemaUpdates( DatabaseUpdater $updater ) {
-		$updater->addExtensionTable( 'github_states',
-			__DIR__ . '/sql/state.sql' );
-		$updater->addExtensionTable( 'github_users',
-			__DIR__ . '/sql/users.sql' );
-		$updater->doUpdates();
-		return true;
-	}
+    public static function onUserLogout(&$user)
+    {
+        return true;
+    }
+
+    public static function getOAuth2VendorClassPath()
+    {
+        return dirname(__FILE__) . DIRECTORY_SEPARATOR . 'vendors' . DIRECTORY_SEPARATOR . 'oauth_2';
+    }
+
+    public static function onLoadExtensionSchemaUpdates(DatabaseUpdater $updater)
+    {
+        $updater->addExtensionTable('github_states',
+            __DIR__ . '/sql/state.sql');
+        $updater->addExtensionTable('github_users',
+            __DIR__ . '/sql/users.sql');
+        $updater->doUpdates();
+        return true;
+    }
 }

@@ -1,41 +1,41 @@
 {
-	"name": "OAuth2Github",
-	"version": "0.0.2",
-	"author": [
-		"Stefan2904 & Kasper Rynning-Tønnesen"
-	],
-	"requires": {
-		"MediaWiki": ">= 1.26.0"
-	},
-	"url": "https://www.mediawiki.org/wiki/Extension:OAuth2Github",
-	"descriptionmsg": "OAuth2 extension for MediaWiki to integrate Github as an identity provider.",
-	"license-name": "MIT",
-	"type": "auth",
-	"AutoloadClasses": {
-		"OAuth2GithubHooks": "OAuth2Github.hooks.php",
-		"SpecialOAuth2Github": "SpecialOAuth2Github.php",
-		"OAuth2":"OAuth2-Client/OAuth2Client.php"
-	},
-	"Hooks": {
-		"UserLogout": [
-			"OAuth2GithubHooks::onUserLogout"
-		],
-		"UserLoginForm": [
-			"OAuth2GithubHooks::onUserLoginForm"
-		],
-		"BeforePageDisplay": [
-			"OAuth2GithubHooks::onBeforePageDisplay"
-		],
-		"LoadExtensionSchemaUpdates": [
-			"OAuth2GithubHooks::onLoadExtensionSchemaUpdates"
-		]
-	},
-	"ResourceFileModulePaths": {
-		"localBasePath": "",
-		"remoteExtPath": "BoilerPlate"
-	},
-	"SpecialPages": {
-		"OAuth2Github": "SpecialOAuth2Github"
-	},
-	"manifest_version": 1
+  "name": "OAuth2Github",
+  "version": "0.0.2",
+  "author": [
+    "Stefan2904 & Kasper Rynning-Tønnesen"
+  ],
+  "requires": {
+    "MediaWiki": ">= 1.26.0"
+  },
+  "url": "https://www.mediawiki.org/wiki/Extension:OAuth2Github",
+  "descriptionmsg": "OAuth2 extension for MediaWiki to integrate Github as an identity provider.",
+  "license-name": "MIT",
+  "type": "auth",
+  "AutoloadClasses": {
+    "OAuth2GithubHooks": "OAuth2Github.hooks.php",
+    "SpecialOAuth2Github": "SpecialOAuth2Github.php",
+    "OAuth2": "OAuth2-Client/OAuth2Client.php"
+  },
+  "Hooks": {
+    "UserLogout": [
+      "OAuth2GithubHooks::onUserLogout"
+    ],
+    "UserLoginForm": [
+      "OAuth2GithubHooks::onUserLoginForm"
+    ],
+    "BeforePageDisplay": [
+      "OAuth2GithubHooks::onBeforePageDisplay"
+    ],
+    "LoadExtensionSchemaUpdates": [
+      "OAuth2GithubHooks::onLoadExtensionSchemaUpdates"
+    ]
+  },
+  "ResourceFileModulePaths": {
+    "localBasePath": "",
+    "remoteExtPath": "BoilerPlate"
+  },
+  "SpecialPages": {
+    "OAuth2Github": "SpecialOAuth2Github"
+  },
+  "manifest_version": 1
 }

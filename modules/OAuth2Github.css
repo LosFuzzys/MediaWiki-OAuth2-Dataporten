@@ -1,16 +1,16 @@
-.dataporten-button{
-	background-color:#af0000 !important;
-	color: white !important;
-	border: 1px solid #af0000;
-    text-shadow: 0 1px rgba(0,0,0,0.1);
+.dataporten-button {
+    background-color: #af0000 !important;
+    color: white !important;
+    border: 1px solid #af0000;
+    text-shadow: 0 1px rgba(0, 0, 0, 0.1);
 }
 
-.dataporten-button:hover{
-	background-color:#800000 !important;
-	color:white;
+.dataporten-button:hover {
+    background-color: #800000 !important;
+    color: white;
 }
 
-.dataporten-button:focus{
+.dataporten-button:focus {
     border-color: #ffffff;
     box-shadow: 0 0 0 1px #800000;
     outline: none;
