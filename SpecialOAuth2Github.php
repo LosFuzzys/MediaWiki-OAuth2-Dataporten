@@ -70,7 +70,7 @@ class SpecialOAuth2Github extends SpecialPage
             array('state' => $state,
                 'return_to' => $url),
             'Database::insert');
-        $dbw->begin();
+
         $this->client->redirect($state);
     }
 
@@ -92,7 +92,6 @@ class SpecialOAuth2Github extends SpecialPage
         $dbw = wfGetDB(DB_MASTER);
         $dbw->delete('github_states',
             array('state' => $wgRequest->getVal('state')));
-        $dbw->begin();
 
         $access_token = $this->client->get_access_token();
         if (!$access_token) {
