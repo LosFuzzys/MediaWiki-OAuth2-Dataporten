@@ -99,14 +99,21 @@ class SpecialOAuth2Github extends SpecialPage
             throw new MWException('Something went wrong fetching the access token');
         }
 
-        $credentials = $this->fix_return($this->client->get_identity($access_token, $wgOAuth2Github['config']['info_endpoint']));
+        $userdata = $this->client->get_identity($access_token, $wgOAuth2Github['config']['info_endpoint']);
+        $credentials = $this->fix_return($userdata);
 
 
         if (isset($wgOAuth2Github['config']['required_org']) && $wgOAuth2Github['config']['required_org'] != NULL) {
-            // https://api.github.com/users/$name/orgs
-            //$orgsEndpoint = 'https://api.github.com/users/' .$credentials['id'] . '/orgs';
-            $orgsEndpoint = 'https://api.github.com/user/orgs';
-            $orgs = $this->client->get_identity($access_token, $orgsEndpoint); // $wgOAuth2Github['config']['group_endpoint']);
+            if ($userdata['groups'] && $userdata['groups'] != NULL) {
+                // 'groups' already received via user data endpoint
+                $orgs = $userdata['groups'];
+
+            } else {
+                // https://api.github.com/users/$name/orgs
+                //$orgsEndpoint = 'https://api.github.com/users/' .$credentials['id'] . '/orgs';
+                $orgsEndpoint = 'https://api.github.com/user/orgs';
+                $orgs = $this->client->get_identity($access_token, $orgsEndpoint); // $wgOAuth2Github['config']['group_endpoint']);
+            }
 
             if (!$this->checkGroupmembership($orgs, $wgOAuth2Github['config']['required_org'])) {
                 $error = ('You a not part of the ' . $wgOAuth2Github['config']['required_org'] . ' organization on Github!');
@@ -135,7 +142,8 @@ class SpecialOAuth2Github extends SpecialPage
         return true;
     }
 
-    private function fix_return($response)
+    private
+    function fix_return($response)
     {
 
         if (isset($response['nickname'])) {
@@ -179,17 +187,19 @@ class SpecialOAuth2Github extends SpecialPage
         return $oauth_identity;
     }
 
-    private function checkGroupmembership($orgs, $requiredOrg)
+    private
+    function checkGroupmembership($orgs, $requiredOrg)
     {
         foreach ($orgs as $org) {
             // if($org['id'] === 15344454) return true;
-            if ($org['login'] === $requiredOrg) return true;
+            if (($org['login'] && $org['login'] === $requiredOrg) || $org === $requiredOrg) return true;
         }
 
         return false;
     }
 
-    private function userHandling($credentials)
+    private
+    function userHandling($credentials)
     {
         global $wgOAuth2Github, $wgAuth;
 
@@ -240,21 +250,24 @@ class SpecialOAuth2Github extends SpecialPage
         return $user;
     }
 
-    private function _default()
+    private
+    function _default()
     {
         global $wgOAuth2Github, $wgOut, $wgUser, $wgExtensionAssetsPath;
 
         return true;
     }
 
-    private function _logout()
+    private
+    function _logout()
     {
         global $wgOAuth2Github, $wgOut, $wgUser;
         if ($wgUser->isLoggedIn()) $wgUser->logout();
 
     }
 
-    private function add_user_to_groups($user, $groups)
+    private
+    function add_user_to_groups($user, $groups)
     {
         foreach ($groups as $key => $value) {
             $user->addGroup($groups[$key]["id"]);
