@@ -218,7 +218,7 @@ class SpecialOAuth2Github extends SpecialPage
         }
         $user = User::newFromName($id, 'creatable');
         if (false === $user || $user->getId() != 0) {
-            throw new MWException('Unable to create user.');
+            throw new MWException('Unable to create user for \'' . $externalId . '\'.');
         }
         if (!$user->isLoggedIn()) {
             // [New in MW 1.27]

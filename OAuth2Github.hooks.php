@@ -1,12 +1,14 @@
 <?php
 
+use DatabaseUpdater;
+
 class OAuth2GithubHooks
 {
 
     public static function onBeforePageDisplay(OutputPage &$out, Skin &$skin)
     {
 
-        $script = '<link rel="stylesheet" type="text/css" href="/wiki/extensions/OAuth2Github/modules/OAuth2Github.css">';
+        $script = '<link rel="stylesheet" type="text/css" href="/extensions/MediaWiki-OAuth2-Github/modules/OAuth2Github.css">';
 
         $out->addHeadItem("jsonTree script", $script);
 
@@ -20,6 +22,15 @@ class OAuth2GithubHooks
         $header = $tpl->get('header');
         $header .= '<a class="mw-ui-button dataporten-button" href="' . Skin::makeSpecialUrlSubpage('OAuth2Github', 'redirect', 'returnto=' . $wgRequest->getVal('returnto')) . '">Login with Github</a>';
         $tpl->set('header', $header);
+    }
+
+    public static function onAuthChangeFormFields($requests, $fieldInfo, &$formDescriptor, $action) {
+        global $wgRequest;
+        $formDescriptor["github"] = [
+            'type' => 'info',
+            'default' => '<a class="mw-ui-button dataporten-button" href="' . Skin::makeSpecialUrlSubpage('OAuth2Github', 'redirect', 'returnto=' . $wgRequest->getVal('returnto')) . '">Login with Github</a>',
+            'raw' => true,
+        ];
     }
 
     public static function onUserLogout(&$user)

@@ -28,6 +28,9 @@
     ],
     "LoadExtensionSchemaUpdates": [
       "OAuth2GithubHooks::onLoadExtensionSchemaUpdates"
+    ],
+    "AuthChangeFormFields": [
+      "OAuth2GithubHooks::onAuthChangeFormFields"
     ]
   },
   "ResourceFileModulePaths": {
