@@ -218,7 +218,7 @@ class SpecialOAuth2Github extends SpecialPage
         }
         $user = User::newFromName($id, 'creatable');
         if (false === $user || $user->getId() != 0) {
-            throw new MWException('Unable to create user.');
+            throw new MWException('Unable to create user for \'' . $externalId . '\'.');
         }
         if (!$user->isLoggedIn()) {
             // [New in MW 1.27]
@@ -230,10 +230,10 @@ class SpecialOAuth2Github extends SpecialPage
         if ($name) {
             $user->setRealName($name);
         }
-        if ($wgAuth->allowPasswordChange()) {
+        //if ($wgAuth->allowPasswordChange()) {
             // TODO: This is deprecated since MW 1.27, replace by AuthManager
             $user->setPassword(PasswordFactory::generateRandomPasswordString(128));
-        }
+        //}
         if ($email) {
             $user->setEmail($email);
             $user->setEmailAuthenticationTimestamp(time());
