@@ -230,10 +230,10 @@ class SpecialOAuth2Github extends SpecialPage
         if ($name) {
             $user->setRealName($name);
         }
-        if ($wgAuth->allowPasswordChange()) {
+        //if ($wgAuth->allowPasswordChange()) {
             // TODO: This is deprecated since MW 1.27, replace by AuthManager
             $user->setPassword(PasswordFactory::generateRandomPasswordString(128));
-        }
+        //}
         if ($email) {
             $user->setEmail($email);
             $user->setEmailAuthenticationTimestamp(time());
